@@ -1,0 +1,104 @@
+// File: AuraAICore.js
+// Core module for AuraAI platform: Timewave calculation, calendar framework & mood state
+
+// King Wen sequence base (64 hexagrams in Timewave order)
+const kingWenSequence = [
+  1, 33, 5, 26, 11, 9, 14, 43, 34, 10, 58, 61, 54, 32, 50, 28,
+  44, 23, 27, 24, 2, 20, 16, 7, 6, 41, 51, 21, 42, 3, 29, 59,
+  40, 64, 47, 6, 22, 4, 37, 17, 62, 53, 31, 49, 19, 46, 30, 56,
+  13, 15, 8, 25, 35, 45, 48, 18, 57, 60, 55, 38, 39, 12, 36, 63
+];
+
+// Timewave fractal transform function
+function fractalTransform(x) {
+  const a = 1.5; // fractal scale constant
+  let sum = 0;
+  for (let n = 0; n < 10; n++) {
+    sum += Math.pow(a, -n) * kingWenWaveTerm(x, n);
+  }
+  return sum;
+}
+
+function kingWenWaveTerm(x, n) {
+  const mod = 64;
+  const index = ((x * Math.pow(mod, n)) % mod) | 0;
+  const val = kingWenSequence[index % mod];
+  return val / mod;
+}
+
+// Gregorian calendar converter
+class GregorianCalendar {
+  static convertDate(date) {
+    return date.toISOString().split('T')[0];
+  }
+}
+
+// Mood emojis linked to novelty zones
+const moodEmojis = [
+  { range: [0, 2], emoji: "💤", mood: "Restful, stable" },
+  { range: [2, 5], emoji: "🤔", mood: "Reflective, curious" },
+  { range: [5, 8], emoji: "⚡", mood: "Energetic, disruptive" },
+  { range: [8, 12], emoji: "😄", mood: "Inspired, creative" }
+];
+
+// Get mood for a novelty value
+function getMood(novelty) {
+  for (let m of moodEmojis) {
+    if (novelty >= m.range[0] && novelty < m.range[1]) {
+      return m;
+    }
+  }
+  return moodEmojis[0]; // default restful if none matched
+}
+
+// AuraAI main app framework
+class AuraAI {
+  constructor() {
+    this.calendars = {};
+    this.selectedCalendars = [];
+  }
+
+  registerCalendar(name, calendarModule) {
+    this.calendars[name] = calendarModule;
+  }
+
+  selectCalendar(name) {
+    if (this.calendars[name] && !this.selectedCalendars.includes(name)) {
+      this.selectedCalendars.push(name);
+    }
+  }
+
+  deselectCalendar(name) {
+    this.selectedCalendars = this.selectedCalendars.filter(c => c !== name);
+  }
+
+  getDateRepresentations(date) {
+    const reps = {};
+    for (const calName of this.selectedCalendars) {
+      const mod = this.calendars[calName];
+      reps[calName] = mod.convertDate(date);
+    }
+    return reps;
+  }
+
+  calculateNoveltyForDate(date) {
+    // Convert date to days since epoch for example (Jan 1, 1970)
+    const epoch = new Date(Date.UTC(1970, 0, 1));
+    const diffTime = Math.abs(date.getTime() - epoch.getTime());
+    const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
+
+    // Calculate fractal novelty value
+    const noveltyRaw = fractalTransform(diffDays);
+    // Scale novelty to 0-12 for mood mapping
+    const noveltyScaled = (noveltyRaw % 12);
+    return { raw: noveltyRaw, scaled: noveltyScaled, mood: getMood(noveltyScaled) };
+  }
+}
+
+// Export instance for app
+const auraAIInstance = new AuraAI();
+auraAIInstance.registerCalendar('Gregorian', GregorianCalendar);
+auraAIInstance.selectCalendar('Gregorian');
+
+// Export for import elsewhere
+export default auraAIInstance;

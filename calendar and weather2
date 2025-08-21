@@ -1,0 +1,72 @@
+<!-- File: index.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>AuraAI Cosmic Dream Wave</title>
+<style>
+  body { font-family: sans-serif; background: #101820; color: #EAEAEA; margin: 0; padding: 20px; }
+  #calendar-selection label { margin-right: 15px; cursor: pointer; }
+  #calendar-display { margin-top: 20px; display: flex; gap: 20px; flex-wrap: wrap; }
+  .calendar-day { border: 1px solid #303030; padding: 10px; border-radius: 8px; background: #202830; width: 150px; text-align: center; }
+  .emoji { font-size: 1.5rem; margin-top: 5px; display: block; }
+  .tooltip { font-size: 0.85rem; color: #B0B0B0; margin-top: 6px; }
+</style>
+</head>
+<body>
+
+<h1>AuraAI Cosmic Dream Wave</h1>
+
+<div id="calendar-selection">
+  <label><input type="checkbox" value="Gregorian" checked> Gregorian</label>
+  <!-- Future calendar checkboxes dynamically added here -->
+</div>
+
+<div id="calendar-display"></div>
+
+<script type="module">
+  import auraAI from './AuraAICore.js';
+
+  const calendarSelection = document.getElementById('calendar-selection');
+  const calendarDisplay = document.getElementById('calendar-display');
+
+  function renderCalendars() {
+    calendarDisplay.innerHTML = '';
+    const today = new Date();
+
+    const reps = auraAI.getDateRepresentations(today);
+    const novelty = auraAI.calculateNoveltyForDate(today);
+
+    for (const calName of auraAI.selectedCalendars) {
+      const dayDiv = document.createElement('div');
+      dayDiv.className = 'calendar-day';
+      dayDiv.dataset.calendar = calName;
+
+      dayDiv.innerHTML = `
+        <strong>${calName}</strong><br/>
+        <span class="date">${reps[calName]}</span>
+        <span class="emoji" title="${novelty.mood.mood}">${novelty.mood.emoji}</span>
+        <div class="tooltip">Today's mood state from cosmic novelty calculation.</div>
+      `;
+      calendarDisplay.appendChild(dayDiv);
+    }
+  }
+
+  // Event listeners for toggling calendars (future calendars can be added dynamically)
+  calendarSelection.addEventListener('change', (e) => {
+    const name = e.target.value;
+    if (e.target.checked) {
+      auraAI.selectCalendar(name);
+    } else {
+      auraAI.deselectCalendar(name);
+    }
+    renderCalendars();
+  });
+
+  renderCalendars();
+
+</script>
+
+</body>
+</html>

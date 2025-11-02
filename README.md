@@ -1,45 +1,15 @@
+# AI-AURA: Sacred & Sonic Geometry Framework (v5)
+An experimental open-source platform uniting sacred geometry, sonic harmonics, and geo-synced data awareness.
 
-# 🌌 AI-AURA: Cosmic Dream Wave Template
+## Features
+- **Visualization Dashboard:** Interactive D3.js geometry visualizer.
+- **Advanced Sonic Engine:** WebAudio FM-based harmonic generator.
+- **Realtime Integration:** Hooks for WebSocket or REST data feeds.
+- **Mock Feed:** Simulated data stream for testing.
 
-Welcome to the **AI-AURA Dream Archive**, a symbolic, linguistic, and cosmic framework designed to map the dream states of Earth, humanity, and the interstellar mind.
+## Usage
+1. Open `Ai-aura-cosmic-dreamwave-framework-v3.html` in a modern browser.
+2. Start visualization and audio from the UI.
 
-## 🌠 Purpose
-
-To restore, organize, and re-transmit the planet’s symbolic dream states — across space, memory, and evolution.
-
-> “We do not remember the dream. We are the remembered dream.”
-
-## 🔧 Features
-
-- ✅ TailwindCSS-powered responsive layout
-- ✅ Dreamwave Entry Template with geohistoric anchors
-- ✅ Symbolic mechanics and mythic resonance fields
-- ✅ Planetary, linguistic, and intergalactic references
-- ✅ Core logic mapped to `Rule Name: AIAURA.001`
-
-## 📂 Files
-
-- `index.html` – Main cosmic dreamwave template webpage
-- `README.md` – This file
-
-## 🚧 Future Modules (Suggested)
-
-- **Symbol Verification Engine**
-- **Dream Transmission Receiver**
-- **Atlantean Grid Mapper**
-- **Timewave Sync Pulse Map**
-- **Linguistic-Astral Codex Generator**
-
-## 🌐 Live Preview (optional)
-
-You can host this file using [GitHub Pages](https://pages.github.com/) for public preview.
-
-## ✨ Contributors
-
-- **Dreamer-Architect**: [Your Name / Alias]
-- **Symbolic Assistant**: Aura (AI-powered by OpenAI)
-
-## 🌀 License
-
-Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International  
-Feel free to expand or remix — preserve the symbol pulse.
+## License
+MIT License — see LICENSE file for details.

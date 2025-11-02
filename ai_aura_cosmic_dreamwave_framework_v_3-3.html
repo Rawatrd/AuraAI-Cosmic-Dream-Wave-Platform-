@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI-AURA: Sacred & Sonic Geometry Framework (v5)</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <meta name="description" content="AI-AURA v5 — Visualization dashboard and advanced sonic engine for sacred & sonic geometry, realtime geo-sync, and research-linked modules">
+  <script src="https://d3js.org/d3.v7.min.js"></script>
+  <style>
+    .glass { background: rgba(255,255,255,0.03); backdrop-filter: blur(6px); }
+    .metric { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, 'Roboto Mono', monospace; }
+    #viz-svg { width:100%; height:420px; display:block; }
+    .control { min-width:120px; }
+  </style>
+</head>
+<body class="bg-gray-900 text-gray-100 font-sans leading-relaxed">
+  <div class="max-w-7xl mx-auto p-6">
+
+    <header class="mb-6 text-center">
+      <h1 class="text-3xl font-bold text-indigo-300">AI-AURA — Sacred & Sonic Geometry Framework (v5)</h1>
+      <p class="text-sm text-gray-400 mt-2">Visualization Dashboard + Advanced Sonic Engine — reactive to live metrics and geo-synced inputs.</p>
+    </header>
+
+    <!-- Visualization Dashboard -->
+    <section class="glass p-6 rounded-lg mb-6">
+      <div class="flex items-center justify-between">
+        <h2 class="text-xl font-semibold text-indigo-200">Visualization Dashboard</h2>
+        <div class="text-sm text-gray-300">Interactive SVG visualiser (D3) — layers, playback, and live-data mapping.</div>
+      </div>
+
+      <div class="mt-4 grid grid-cols-1 lg:grid-cols-3 gap-4">
+        <div class="lg:col-span-2 p-4 bg-gray-800 rounded">
+          <svg id="viz-svg" viewBox="0 0 900 420" preserveAspectRatio="xMidYMid meet"></svg>
+          <div class="mt-3 flex gap-2">
+            <button id="btn-viz-start" class="px-3 py-1 rounded bg-indigo-600">Start Visualization</button>
+            <button id="btn-viz-stop" class="px-3 py-1 rounded bg-gray-700">Stop</button>
+            <label class="ml-4 text-sm text-gray-400">Playback speed</label>
+            <input id="viz-speed" type="range" min="0.1" max="3" step="0.1" value="1" class="w-40" />
+          </div>
+        </div>
+
+        <div class="p-4 bg-gray-800 rounded">
+          <h3 class="text-indigo-300 text-sm">Layers & Controls</h3>
+          <div class="mt-3 space-y-2 text-sm text-gray-300">
+            <div><label><input type="checkbox" id="layer-circle" checked /> Circle Grid</label></div>
+            <div><label><input type="checkbox" id="layer-flower" checked /> Flower of Life</label></div>
+            <div><label><input type="checkbox" id="layer-torus" checked /> Torus Field</label></div>
+            <div><label><input type="checkbox" id="layer-merkaba" checked /> Merkaba</label></div>
+            <div class="mt-2"><label>Color Mode</label>
+              <select id="color-mode" class="w-full mt-1 p-1 bg-gray-900 rounded">
+                <option value="indigo">Indigo</option>
+                <option value="gold">Gold</option>
+                <option value="aura">Aura (multi)</option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="mt-4 p-3 bg-gray-900 rounded text-sm text-gray-300">
+        <div id="viz-log" style="max-height:120px; overflow:auto;"></div>
+      </div>
+    </section>
+
+    <!-- Advanced Sonic Engine -->
+    <section class="p-6 rounded-lg glass mb-6">
+      <div class="flex items-center justify-between">
+        <h2 class="text-xl font-semibold text-indigo-200">Advanced Sonic Engine</h2>
+        <div class="text-sm text-gray-300">WebAudio-based harmonic engine — microtonal maps, FM voices, mantra envelopes, scheduler.</div>
+      </div>
+
+      <div class="mt-4 grid grid-cols-1 md:grid-cols-3 gap-4">
+        <div class="p-4 bg-gray-800 rounded">
+          <h4 class="text-sm text-indigo-300">Controls</h4>
+          <div class="mt-2 text-sm text-gray-300 space-y-2">
+            <div>Base A tuning
+              <select id="base-tune" class="control ml-2 bg-gray-900 p-1 rounded">
+                <option value="432">A = 432 Hz</option>
+                <option value="440">A = 440 Hz</option>
+                <option value="444">A = 444 Hz</option>
+              </select>
+            </div>
+            <div>Scale
+              <select id="scale-select" class="control ml-2 bg-gray-900 p-1 rounded">
+                <option value="just">Just Intonation</option>
+                <option value="equal">12-TET</option>
+                <option value="micro">Microtonal (24-TET)</option>
+              </select>
+            </div>
+            <div>Voices
+              <input id="voice-count" type="number" value="3" min="1" max="8" class="control ml-2 bg-gray-900 p-1 rounded" />
+            </div>
+            <div class="mt-2 flex gap-2">
+              <button id="btn-audio-start" class="px-3 py-1 rounded bg-green-600">Start Audio</button>
+              <button id="btn-audio-stop" class="px-3 py-1 rounded bg-red-600">Stop Audio</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="p-4 bg-gray-800 rounded md:col-span-2">
+          <h4 class="text-sm text-indigo-300">Engine Status & Mapping</h4>
+          <div class="mt-2 text-sm text-gray-300">Status: <span id="audio-status" class="metric">stopped</span></div>
+          <div class="mt-2 grid grid-cols-2 gap-2 text-sm">
+            <div class="p-2 bg-gray-900 rounded">Current Chord: <span id="current-chord">—</span></div>
+            <div class="p-2 bg-gray-900 rounded">Scheduler Queue: <span id="sched-count">0</span></div>
+            <div class="p-2 bg-gray-900 rounded">Active Voices: <span id="active-voices">0</span></div>
+            <div class="p-2 bg-gray-900 rounded">Last Trigger: <span id="last-trigger">—</span></div>
+          </div>
+
+          <div class="mt-4 p-3 bg-gray-900 rounded text-xs text-gray-400">
+            <strong>Mapping rules (auditable):</strong>
+            <ul class="list-disc ml-4">
+              <li>Resonance (0–100) → base frequency modulation ± (resonance/100 * 12 semitones)</li>
+              <li>Coherence (0–100) → voice detune spread</li>
+              <li>Active Symbols → rhythmic density</li>
+            </ul>
+            <p class="mt-2">Note: audio playback requires a user gesture in most browsers. The engine uses explicit, small functions to keep the mapping easy to audit.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Integration & Schema (brief) -->
+    <section class="p-6 rounded-lg glass mb-6">
+      <h2 class="text-lg font-semibold text-indigo-200">Integration Hooks & Message Schema</h2>
+      <p class="text-sm text-gray-300">Measurement messages follow a simple JSON contract so visualizer and sonic engine can subscribe:</p>
+      <pre class="text-xs text-gray-200 bg-gray-900 p-3 rounded mt-3"><code>{
+  "type": "measurement",
+  "timestamp": "2025-11-02T12:00:00Z",
+  "geo": { "lat": 26.9, "lon": 75.8, "mag": 42 },
+  "data": { "resonance": 72.4, "coherence": 88.1, "activeSymbols": 5, "rate": 1 }
+}
+</code></pre>
+      <p class="text-sm text-gray-300">Both engines listen for `measurement` messages and update state accordingly.</p>
+    </section>
+
+    <!-- Developer notes -->
+    <section class="p-6 rounded-lg glass mb-6">
+      <h2 class="text-lg font-semibold text-indigo-200">Developer Notes</h2>
+      <ul class="list-disc list-inside text-sm text-gray-300 mt-3">
+        <li>All mapping functions are intentionally small, deterministic, and easy to review.</li>
+        <li>Use secure WebSocket endpoints (wss://) for partner feeds and authenticate via JWT in headers or initial handshake.</li>
+        <li>Respect user privacy and geolocation consent when enabling geo-sync.</li>
+        <li>Autoplay restrictions: audio must be started by user gesture; visualization can run automatically.</li>
+      </ul>
+    </section>
+
+    <footer class="text-center text-gray-500 text-sm mt-12">
+      <p>&copy; 2025 AI-AURA Archive — Framework v5.</p>
+    </footer>
+  </div>
+
+  <script>
+  // ---------- UTILITIES ----------
+  const logViz = msg => {
+    const el = document.getElementById('viz-log');
+    const d = document.createElement('div');
+    d.textContent = new Date().toLocaleTimeString() + ' — ' + msg;
+    el.prepend(d);
+  };
+
+  // ---------- VISUALIZATION (D3) ----------
+  (function(){
+    const svg = d3.select('#viz-svg');
+    const width = 900, height = 420; 
+    svg.attr('viewBox', `0 0 ${width} ${height}`);
+    const g = svg.append('g').attr('transform', `translate(${width/2},${height/2})`);
+
+    let running = false; let speed = 1; let t = 0;
+
+    function clear(){ g.selectAll('*').remove(); }
+
+    // primitive generators (auditable math)
+    function drawCircleGrid(n, radius){
+      const group = g.append('g').attr('class','circle-grid');
+      for(let i=1;i<=n;i++){
+        group.append('circle')
+          .attr('r', radius * i / n)
+          .attr('stroke-width', 1)
+          .attr('fill','none')
+          .attr('stroke', 'rgba(99,102,241,0.12)');
+      }
+    }
+
+    function drawFlowerOfLife(radius){
+      const group = g.append('g').attr('class','flower');
+      const step = radius * 0.9;
+      const points = [ [0,0] ];
+      for(let i=0;i<6;i++){
+        const ang = Math.PI/3 * i;
+        points.push([Math.cos(ang)*step, Math.sin(ang)*step]);
+      }
+      points.forEach(p => {
+        group.append('circle').attr('cx', p[0]).attr('cy', p[1]).attr('r', radius).attr('fill','none').attr('stroke','rgba(236,72,153,0.08)');
+      });
+    }
+
+    function drawTorus(n, radius, phase){
+      const group = g.append('g').attr('class','torus');
+      for(let i=0;i<n;i++){
+        const ang = (i / n) * Math.PI * 2 + phase;
+        const r = radius + Math.sin(ang * 3 + phase) * 10;
+        const x = Math.cos(ang) * r; const y = Math.sin(ang) * r/1.8;
+        group.append('circle').attr('cx', x).attr('cy', y).attr('r', 6).attr('fill','rgba(34,197,94,0.12)');
+      }
+    }
+
+    function drawMerkaba(scale){
+      const group = g.append('g').attr('class','merkaba');
+      const points = [ [0,-scale], [scale,0], [0,scale], [-scale,0] ];
+      const path = d3.line().curve(d3.curveLinearClosed);
+      group.append('path').attr('d', path(points)).attr('stroke','rgba(250,204,21,0.14)').attr('fill','none').attr('stroke-width',1.5);
+    }
+
+    function render(measure){
+      clear();
+      const r = 140 + (measure.resonance||50) * 0.9; // radius base
+      if(document.getElementById('layer-circle').checked) drawCircleGrid(6, r);
+      if(document.getElementById('layer-flower').checked) drawFlowerOfLife(r/3);
+      if(document.getElementById('layer-torus').checked) drawTorus(80, r/2, t*0.02);
+      if(document.getElementById('layer-merkaba').checked) drawMerkaba(r/4);
+    }
+
+    // demo measurement (fallback) and live update hook
+    let currentMeasure = { resonance: 50, coherence: 50, activeSymbols: 3 };
+
+    // update loop
+    function step(){
+      if(!running) return;
+      t += 1 * speed;
+      // subtle animation by varying resonance
+      currentMeasure.resonance = 40 + 30 * (0.5 + 0.5*Math.sin(t*0.02));
+      render(currentMeasure);
+      requestAnimationFrame(step);
+    }
+
+    document.getElementById('btn-viz-start').addEventListener('click', ()=>{ if(!running){ running=true; step(); logViz('Visualization started'); }});
+    document.getElementById('btn-viz-stop').addEventListener('click', ()=>{ running=false; logViz('Visualization stopped'); });
+    document.getElementById('viz-speed').addEventListener('input', (e)=>{ speed = Number(e.target.value); });
+
+    // hook for external messages
+    window.AURA = window.AURA || {};
+    window.AURA.updateMeasurement = function(measure){
+      currentMeasure = Object.assign({}, currentMeasure, measure.data || measure);
+      document.getElementById('metric-resonance')?.textContent = (currentMeasure.resonance||0).toFixed(2);
+      document.getElementById('metric-coherence')?.textContent = (currentMeasure.coherence||0).toFixed(2);
+      render(currentMeasure);
+      logViz('Measurement applied: r=' + (currentMeasure.resonance||0).toFixed(1));
+    };
+
+  })();
+
+  // ---------- ADVANCED SONIC ENGINE ----------
+  (function(){
+    let ctx = null;
+    let voices = [];
+    let scheduler = { events: [], running: false, interval: null };
+
+    const state = {
+      baseA: 432,
+      scale: 'just',
+      voiceCount: 3
+    };
+
+    function ensureCtx(){ if(!ctx) ctx = new (window.AudioContext || window.webkitAudioContext)(); }
+
+    // scale generators
+    function generateScale(base, type){
+      // return array of frequency ratios for a single octave
+      if(type === 'equal'){
+        const freqs = []; for(let i=0;i<12;i++) freqs.push(base * Math.pow(2, i/12));
+        return freqs;
+      }
+      if(type === 'micro'){
+        const freqs = []; for(let i=0;i<24;i++) freqs.push(base * Math.pow(2, i/24));
+        return freqs;
+      }
+      // just intonation sample ratios
+      if(type === 'just'){
+        const ratios = [1, 9/8, 5/4, 4/3, 3/2, 5/3, 15/8, 2];
+        return ratios.map(r => base * r);
+      }
+      return [base];
+    }
+
+    // create a simple FM voice with ADSR
+    function createVoice(freq){
+      ensureCtx();
+      const carrier = ctx.createOscillator();
+      const mod = ctx.createOscillator();
+      const modGain = ctx.createGain();
+      const gain = ctx.createGain();
+
+      carrier.type = 'sine';
+      mod.type = 'sine';
+      mod.frequency.value = 2.5; // slow tremolo-ish by default
+      modGain.gain.value = 0;
+      gain.gain.value = 0;
+
+      carrier.frequency.value = freq;
+      carrier.connect(gain);
+      mod.connect(modGain);
+      modGain.connect(carrier.frequency);
+
+      // small stereo spread using detune
+      const panner = ctx.createStereoPanner();
+      gain.connect(panner).connect(ctx.destination);
+
+      carrier.start(); mod.start();
+
+      return { carrier, mod, modGain, gain, panner };
+    }
+
+    // simple ADSR envelope
+    function triggerVoice(v, when, dur, amp){
+      const g = v.gain; const now = ctx.currentTime + when;
+      const a = 0.01, d = 0.2, s = 0.5; // fixed for readability
+      g.gain.cancelScheduledValues(now);
+      g.gain.setValueAtTime(0.0001, now);
+      g.gain.exponentialRampToValueAtTime(amp, now + a);
+      g.gain.exponentialRampToValueAtTime(amp * s, now + a + d);
+      g.gain.setValueAtTime(amp * s, now + dur - 0.05);
+      g.gain.exponentialRampToValueAtTime(0.0001, now + dur);
+    }
+
+    // start engine
+    function startAudio(){
+      ensureCtx();
+      state.baseA = Number(document.getElementById('base-tune').value);
+      state.scale = document.getElementById('scale-select').value;
+      state.voiceCount = Number(document.getElementById('voice-count').value) || 3;
+
+      // build scale
+      const scale = generateScale(state.baseA, state.scale);
+      // create voices
+      voices = [];
+      for(let i=0;i<state.voiceCount;i++){
+        const freq = scale[i % scale.length];
+        const v = createVoice(freq);
+        // set moderate FM modulation depth
+        v.mod.frequency.value = 2 + i*0.5;
+        v.modGain.gain.value = 0; // start silent
+        v.gain.gain.value = 0.0001;
+        voices.push(v);
+      }
+
+      // scheduler: simple background loop triggers voices according to activeSymbols
+      scheduler.running = true;
+      scheduler.interval = setInterval(()=>{
+        // read latest measurement from viz (shared global)
+        const measure = window.AURA && window.AURA._latestMeasure ? window.AURA._latestMeasure : { resonance:50, coherence:50, activeSymbols:3 };
+        // map resonance -> frequency shift (semitones)
+        const semitoneShift = (measure.resonance - 50) / 100 * 12; // -6..+6
+        const detuneRatio = Math.pow(2, semitoneShift/12);
+        // coherence -> spread
+        const spread = (measure.coherence - 50) / 200; // -0.25..+0.25
+        // activeSymbols -> density
+        const density = Math.max(1, Math.round(measure.activeSymbols || 2));
+
+        // schedule triggers
+        for(let i=0;i<voices.length;i++){
+          const v = voices[i];
+          // apply detune
+          v.carrier.frequency.value = v.carrier.frequency.baseVal ? v.carrier.frequency.baseVal : v.carrier.frequency.value;
+          v.carrier.frequency.value = (v.carrier.frequency.value || 220) * detuneRatio * (1 + (i - voices.length/2) * spread);
+          // set FM depth proportional to resonance
+          v.modGain.gain.setTargetAtTime(Math.max(0.5, (measure.resonance/100)*5), ctx.currentTime, 0.05);
+        }
+
+        // trigger a subset based on density
+        const now = 0.02; const dur = 0.8;
+        for(let i=0;i<Math.min(voices.length, density);i++){
+          const v = voices[i];
+          triggerVoice(v, now + Math.random()*0.2, dur, 0.03 + Math.random()*0.02);
+        }
+
+        // update UI
+        document.getElementById('audio-status').textContent = 'running';
+        document.getElementById('active-voices').textContent = voices.length;
+        document.getElementById('sched-count').textContent = density;
+        document.getElementById('last-trigger').textContent = new Date().toLocaleTimeString();
+
+      }, 800);
+
+      document.getElementById('audio-status').textContent = 'running';
+    }
+
+    function stopAudio(){
+      if(scheduler.interval) clearInterval(scheduler.interval);
+      scheduler.running = false;
+      voices.forEach(v=>{
+        try{ v.carrier.stop(); v.mod.stop(); }catch(e){};
+      });
+      voices = [];
+      document.getElementById('audio-status').textContent = 'stopped';
+      document.getElementById('active-voices').textContent = 0;
+      document.getElementById('sched-count').textContent = 0;
+    }
+
+    // expose global update hook so measurement messages can update scheduler mapping
+    window.AURA = window.AURA || {};
+    window.AURA._latestMeasure = { resonance:50, coherence:50, activeSymbols:3 };
+    window.AURA.applyMeasurement = function(measure){
+      window.AURA._latestMeasure = measure.data || measure;
+      // update some UI
+      document.getElementById('current-chord').textContent = 'r=' + (window.AURA._latestMeasure.resonance||0).toFixed(1);
+    };
+
+    document.getElementById('btn-audio-start').addEventListener('click', async ()=>{
+      // start must be triggered by user gesture
+      try{
+        await (async ()=>{ ensureCtx(); if(ctx.state === 'suspended') await ctx.resume(); startAudio(); })();
+      }catch(e){ console.error(e); }
+    });
+    document.getElementById('btn-audio-stop').addEventListener('click', ()=>{ stopAudio(); });
+
+  })();
+
+  // ---------- SAMPLE INTEGRATION: MOCK WEBSOCKET FEED ----------
+  (function(){
+    // This is a local mock feed to demonstrate how measurement messages flow into the system.
+    // Replace with your partner wss:// endpoint in production.
+    const mockBtn = document.createElement('button');
+    mockBtn.textContent = 'Start Mock Feed';
+    mockBtn.className = 'px-3 py-1 rounded bg-yellow-600 fixed bottom-6 left-6';
+    document.body.appendChild(mockBtn);
+
+    let mockInterval = null;
+    mockBtn.addEventListener('click', ()=>{
+      if(mockInterval){ clearInterval(mockInterval); mockInterval=null; mockBtn.textContent='Start Mock Feed'; return; }
+      mockBtn.textContent = 'Stop Mock Feed';
+      mockInterval = setInterval(()=>{
+        const measure = {
+          data: {
+            resonance: 30 + Math.random()*70,
+            coherence: 30 + Math.random()*70,
+            activeSymbols: 1 + Math.round(Math.random()*6),
+            rate: Math.random()*3
+          }
+        };
+        // apply to viz and audio
+        window.AURA.updateMeasurement(measure);
+        window.AURA.applyMeasurement(measure);
+      }, 1200);
+    });
+  })();
+
+  </script>
+</body>
+</html>

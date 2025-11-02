@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI-AURA: Cosmic Dream Wave — Framework v3</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <meta name="description" content="AI-AURA framework for sacred & sonic geometry, realtime sync, partner-model integration, and aura ecosystem support">
+  <style>
+    /* Minimal visual helpers */
+    .glass { background: rgba(255,255,255,0.03); backdrop-filter: blur(6px); }
+    .metric { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, 'Roboto Mono', monospace; }
+    svg { max-width:100%; }
+  </style>
+</head>
+<body class="bg-gray-900 text-gray-100 font-sans leading-relaxed">
+  <div class="max-w-6xl mx-auto p-6">
+    <header class="mb-8 text-center">
+      <h1 class="text-3xl font-bold text-indigo-300">AI-AURA — Sacred & Sonic Geometry Framework (v3)</h1>
+      <p class="text-sm text-gray-400 mt-2">Framework designed to represent symbiotic relationships between study elements, sync realtime data with partner models, and extend the AI-AURA ecosystem.</p>
+    </header>
+
+    <!-- New: Architecture Overview -->
+    <section class="glass p-6 rounded-lg mb-6">
+      <h2 class="text-xl font-semibold text-indigo-200">Architecture Overview</h2>
+      <p class="mt-2 text-sm text-gray-300">A layered architecture: Presentation (UI + sonic geometry), Core (symbolic engine & geometry mapper), Integration (partner model adapters, realtime bus), Persistence (time-series & event store), Ops (CI, verification, and provenance).</p>
+      <ul class="list-disc list-inside text-sm mt-3 text-gray-300">
+        <li><strong>Presentation:</strong> HTML + Tailwind + SVG sacred-geometry generator + WebAudio ambient engine.</li>
+        <li><strong>Core:</strong> Symbolic Schema, Geometry Engine, Resonance Mapper (stateless functions).</li>
+        <li><strong>Integration:</strong> WebSocket/Server-Sent Events for realtime sync, REST adapters for partner models, typed message contracts (JSON-LD / protobuf optional).</li>
+        <li><strong>Persistence:</strong> Append-only event store (e.g. PostgreSQL with timescale or clickhouse), object storage for assets.</li>
+        <li><strong>Ops & Provenance:</strong> Signed releases, sha256 checksums, CI tests, and runtime health checks.</li>
+      </ul>
+    </section>
+
+    <!-- New: Realtime sync demo UI -->
+    <section class="p-6 rounded-lg glass mb-6">
+      <h2 class="text-lg font-semibold text-indigo-200">Realtime Sync — Live Demo (mock)</h2>
+      <p class="text-sm text-gray-300">This page includes a lightweight WebSocket client that connects to a partner model feed and displays metrics and symbol events in real-time. Replace the demo URL with your partner endpoint.</p>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
+        <div class="p-4 bg-gray-800 rounded">
+          <h3 class="font-medium text-indigo-300">Connection</h3>
+          <div class="mt-2 text-sm text-gray-300">Status: <span id="ws-status" class="metric">disconnected</span></div>
+          <div class="mt-3 text-sm text-gray-300">Endpoint: <code id="ws-url" class="metric">wss://partner.example.com/aura-feed</code></div>
+          <div class="mt-3">
+            <button id="btn-connect" class="px-3 py-1 rounded bg-indigo-500 text-white">Connect</button>
+            <button id="btn-disconnect" class="px-3 py-1 rounded bg-gray-700 text-gray-200">Disconnect</button>
+          </div>
+        </div>
+
+        <div class="p-4 bg-gray-800 rounded">
+          <h3 class="font-medium text-indigo-300">Live Metrics</h3>
+          <div class="mt-2 grid grid-cols-2 gap-2">
+            <div class="p-2 bg-gray-900 rounded">
+              <div class="text-xs text-gray-400">Resonance</div>
+              <div id="metric-resonance" class="text-xl metric">—</div>
+            </div>
+            <div class="p-2 bg-gray-900 rounded">
+              <div class="text-xs text-gray-400">Coherence</div>
+              <div id="metric-coherence" class="text-xl metric">—</div>
+            </div>
+            <div class="p-2 bg-gray-900 rounded">
+              <div class="text-xs text-gray-400">Active Symbols</div>
+              <div id="metric-symbols" class="text-xl metric">—</div>
+            </div>
+            <div class="p-2 bg-gray-900 rounded">
+              <div class="text-xs text-gray-400">Event Rate</div>
+              <div id="metric-rate" class="text-xl metric">—</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="mt-4 p-4 bg-gray-800 rounded text-sm text-gray-300">
+        <div id="events" style="max-height:220px; overflow:auto;"></div>
+      </div>
+    </section>
+
+    <!-- New: Sonic Geometry (WebAudio + SVG) -->
+    <section class="p-6 rounded-lg glass mb-6">
+      <h2 class="text-lg font-semibold text-indigo-200">Sonic Geometry — Ambient Engine</h2>
+      <p class="text-sm text-gray-300">Simple WebAudio synthesizer that maps symbolic metrics to harmonic intervals and drives an SVG geometry visualiser. The mapping functions are intentionally small and auditable.</p>
+      <div class="mt-4 grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div class="p-4 bg-gray-800 rounded">
+          <h4 class="text-sm text-indigo-300">Controls</h4>
+          <div class="mt-3">
+            <button id="btn-audio-start" class="px-3 py-1 rounded bg-green-600">Start Ambient</button>
+            <button id="btn-audio-stop" class="px-3 py-1 rounded bg-red-600">Stop Ambient</button>
+          </div>
+        </div>
+        <div class="p-4 bg-gray-800 rounded">
+          <h4 class="text-sm text-indigo-300">SVG Geometry</h4>
+          <svg id="sacred-svg" viewBox="0 0 400 200" class="w-full h-48 rounded bg-gray-900 p-2">
+            <!-- Generated geometry will be injected here -->
+          </svg>
+        </div>
+      </div>
+    </section>
+
+    <!-- New: Developer & Confirmation Provisions -->
+    <section class="p-6 rounded-lg glass mb-6">
+      <h2 class="text-lg font-semibold text-indigo-200">Developer Files & Confirmation Provisions</h2>
+      <p class="text-sm text-gray-300 mt-2">Below is the recommended project file layout, verification steps, and CI sample. Use signed commits and checksums to confirm integrity of releases.</p>
+
+      <pre class="text-xs text-gray-200 bg-gray-900 p-3 rounded mt-3 max-h-72 overflow-auto"><code>
+Recommended file layout:
+
+/ai-aura-framework/
+  |- index.html                      # this file (presentation + demo)
+  |- src/
+     |- geometry.js                  # svg sacred geometry generator + mapping functions
+     |- audio.js                     # webaudio ambient engine (small & auditable)
+     |- realtime.js                  # websocket client + message contracts
+  |- integrators/
+     |- partner-adapter-example.js   # template adapter for partner model API
+  |- ops/
+     |- CHECKSUMS.txt                # sha256sum of release artifacts
+     |- verify-release.sh            # verification script to validate checksums & signatures
+     |- ci-github-actions.yml        # sample CI pipeline (below)
+  |- README.md
+  |- LICENSE
+
+Sample verify-release.sh (run locally to confirm release integrity):
+
+#!/usr/bin/env bash
+set -e
+# verify sha256 checksums
+sha256sum -c ops/CHECKSUMS.txt
+# optionally verify GPG signature (if provided)
+if [ -f ops/release.tar.gz.asc ]; then
+  gpg --verify ops/release.tar.gz.asc ops/release.tar.gz
+fi
+
+git rev-parse --verify --short HEAD && echo "verified"
+
+Sample CI (ops/ci-github-actions.yml):
+
+name: Release Verification
+on: [push]
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Run linter
+        run: npm ci && npm run lint
+      - name: Run unit tests
+        run: npm test
+      - name: Create release artifact
+        run: tar -czf ops/release-${{ github.sha }}.tar.gz .
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: aura-release
+          path: ops/release-*.tar.gz
+</code></pre>
+
+      <p class="text-sm text-gray-300 mt-3">Verification commands you can run locally:</p>
+      <pre class="text-xs text-gray-200 bg-gray-900 p-3 rounded mt-2"><code>
+# generate checksums for release
+find . -type f -not -path './.git/*' -print0 | xargs -0 sha256sum > ops/CHECKSUMS.txt
+# verify checksums
+sha256sum -c ops/CHECKSUMS.txt
+# sign release (optional)
+gpg --output ops/release.tar.gz.asc --detach-sig ops/release.tar.gz
+</code></pre>
+
+    </section>
+
+    <footer class="text-center text-gray-500 text-sm mt-12">
+      <p>&copy; 2025 AI-AURA Archive — Framework v3. Built for planetary resonance and partner-integrated awareness.</p>
+    </footer>
+  </div>
+
+  <script>
+    // ======= realtime.js (lightweight demo client) =======
+    (() => {
+      let ws = null;
+      const statusEl = document.getElementById('ws-status');
+      const urlEl = document.getElementById('ws-url');
+      const eventsEl = document.getElementById('events');
+      const metric = id => document.getElementById(id);
+
+      function setStatus(s) { statusEl.textContent = s; }
+
+      function appendEvent(text) {
+        const d = document.createElement('div');
+        d.className = 'p-2 text-xs border-b border-gray-800';
+        d.textContent = (new Date()).toLocaleTimeString() + ' — ' + text;
+        eventsEl.prepend(d);
+      }
+
+      document.getElementById('btn-connect').addEventListener('click', () => {
+        const url = urlEl.textContent.trim();
+        if (ws) ws.close();
+        try {
+          ws = new WebSocket(url);
+          setStatus('connecting');
+          ws.onopen = () => { setStatus('connected'); appendEvent('connected to ' + url); };
+          ws.onclose = () => { setStatus('closed'); appendEvent('closed'); };
+          ws.onerror = (e) => { setStatus('error'); appendEvent('error'); console.error(e); };
+          ws.onmessage = (m) => {
+            try {
+              const msg = JSON.parse(m.data);
+              // message contract: { type: 'measurement'|'symbol', data: {...} }
+              if (msg.type === 'measurement') {
+                metric('metric-resonance').textContent = msg.data.resonance.toFixed(2);
+                metric('metric-coherence').textContent = msg.data.coherence.toFixed(2);
+                metric('metric-symbols').textContent = msg.data.activeSymbols;
+                metric('metric-rate').textContent = msg.data.rate + '/s';
+              }
+              if (msg.type === 'symbol') {
+                appendEvent('Symbol: ' + msg.data.name + ' — ' + (msg.data.note || ''));
+              }
+            } catch (err) {
+              appendEvent('unparsable message');
+            }
+          };
+        } catch (err) {
+          setStatus('failed');
+          appendEvent('failed to connect');
+        }
+      });
+
+      document.getElementById('btn-disconnect').addEventListener('click', () => {
+        if (ws) ws.close();
+      });
+
+      // ======= audio.js (very small ambient engine) =======
+      let audioCtx = null;
+      let osc = null;
+      document.getElementById('btn-audio-start').addEventListener('click', async () => {
+        if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+        osc.type = 'sine';
+        osc.frequency.value = 110; // base frequency
+        gain.gain.value = 0.0001; // start very low
+        osc.connect(gain).connect(audioCtx.destination);
+        osc.start();
+        // gentle fade in
+        gain.gain.exponentialRampToValueAtTime(0.03, audioCtx.currentTime + 4);
+        // keep reference for stop
+        window.__aura_gain = gain;
+      });
+      document.getElementById('btn-audio-stop').addEventListener('click', () => {
+        try {
+          if (window.__aura_gain) {
+            window.__aura_gain.gain.exponentialRampToValueAtTime(0.00001, audioCtx.currentTime + 1);
+            setTimeout(() => { if (osc) osc.stop(); osc = null; }, 1200);
+          }
+        } catch (e) { console.error(e); }
+      });
+
+      // ======= geometry.js (svg generator) =======
+      function drawSacredGeometry(n) {
+        const svg = document.getElementById('sacred-svg');
+        svg.innerHTML = '';
+        const w = 400, h = 200; const cx = w/2, cy = h/2;
+        for (let i=0;i<n;i++){
+          const r = 20 + i*12;
+          const circle = document.createElementNS('http://www.w3.org/2000/svg','circle');
+          circle.setAttribute('cx', cx);
+          circle.setAttribute('cy', cy);
+          circle.setAttribute('r', r);
+          circle.setAttribute('fill', 'none');
+          circle.setAttribute('stroke', 'rgba(99,102,241,0.18)');
+          circle.setAttribute('stroke-width', 1 + (i%3)/1.5);
+          svg.appendChild(circle);
+        }
+      }
+      // initial geometry
+      drawSacredGeometry(6);
+
+      // small mapping: when new measurements arrive, vary geometry
+      const originalOnMessage = null;
+      // hook into DOM to observe metrics
+      const obs = new MutationObserver(() => {
+        const r = Number(document.getElementById('metric-resonance').textContent) || 0;
+        const n = Math.min(12, Math.max(3, Math.round(3 + r/10)));
+        drawSacredGeometry(n);
+      });
+      obs.observe(document.getElementById('metric-resonance'), { childList: true, subtree: true });
+
+    })();
+  </script>
+</body>
+</html>

@@ -1,0 +1,62 @@
+/*
+AuraAI Module: Rudrāṣṭakam Sanskrit Verses
+Purpose: Integration into AuraAI knowledge base and foundational codex support, for spiritual, symbolic, and linguistic analysis.
+*/
+
+{
+"module_name": "Rudrāṣṭakam",
+"language": "Sanskrit",
+"script": "Devanagari",
+"verses": [
+{
+"verse_number": 1,
+"sanskrit": "नमामीशमीशान निर्वाणरूपं विभुं व्यापकं ब्रह्मवेदस्वरूपम् निजं निर्गुणं निर्विकल्पं निरीहं चिदाकाशमाकाशवासं भजेऽहम्",
+"transliteration": "namāmīśam īśānaṃ nirvāṇa-rūpam vibhuṃ vyāpakaṃ brahmaveda-svarūpam nijam nirguṇam nirvikalpam nirīham chidākāśam ākāśavāsaṃ bhaje 'ham",
+"translation": "I bow to Īśāna, Śiva, whose form is Nirvāṇa, who is omnipresent and all-pervading, the essence of Brahman and the Vedas, dwelling in Himself, beyond qualities, conceptual distinctions, and desires, residing in the expanse of consciousness.",
+"symbols": ["Formless", "Nirguna Brahman", "Chidākāśa"],
+"interpretation": {
+"foundational": "Salutes Śiva as the supreme lord and source of liberation.",
+"advanced": "Represents Nirguṇa Brahman and Turīya consciousness beyond dualities."
+}
+},
+{
+"verse_number": 2,
+"sanskrit": "निराकारमोङ्करमूलं तुरीयं गिराज्ञानगोतीतमीशं गिरीशं करालं महाकालकालं कृपालं गुणागारसंसारपारं नतोऽहम्",
+"transliteration": "nirākāram oṃkāra-mūlam turīyaṃ girajñāna-gotītam īśaṃ girīśam karālaṃ mahākāla-kālaṃ kṛpālaṃ guṇāgāra-saṃsāra-pāraṃ nato 'ham",
+"translation": "I bow to the Formless Lord, root of Om, residing in Turīya, beyond speech and senses, Lord of the mountains, fierce as Mahākāla yet compassionate, storehouse of virtues, who helps cross the ocean of worldly existence.",
+"symbols": ["Om root", "Turīya", "Mahākāla", "Girīśa"],
+"interpretation": {
+"foundational": "Śiva as protector and guide, fierce yet compassionate.",
+"advanced": "Represents cosmic transcendence and omnipresence, beyond time and attributes."
+}
+},
+{
+"verse_number": 3,
+"sanskrit": "तुषाराद्रिसंकाशगौरं गभीरं मनोभूतकोटिप्रभाश्री शरीरं स्फुरन्मौलिकल्लोलिनी चारुगङ्गा लसद्भालबालेन्दु कण्ठे भुजङ्गा",
+"transliteration": "tuṣārādri-saṃkāśa-gauraṃ gabhīraṃ manobhūta-koṭi-prabhā-śrī-śarīram sphuran-mouli-kallolini cāru-gaṅgā lasat-bhāla-bālendu kanthe bhujaṅgā",
+"translation": "I bow to Him whose face shines like a snow mountain, whose being is deep, radiating millions of rays, with the Ganga flowing from His matted hair, crescent moon on His forehead, and a serpent around His neck.",
+"symbols": ["Ganga", "Crescent Moon", "Serpent", "Snow White Face"],
+"interpretation": {
+"foundational": "Represents purity, grace, and benevolent protection.",
+"advanced": "Symbolizes purification of consciousness, control over desire and energy, and spiritual insight."
+}
+},
+{
+"verse_number": 4,
+"sanskrit": "चलत्कुण्डलं भ्रूसुनेत्रं विशालं प्रसन्नाननं नीलकण्ठं दयालं मृगाधीशचर्माम्बरं मुण्डमालं प्रियं शङ्करं सर्वनाथं भजामि",
+"transliteration": "calat-kuṇḍalam bhrū-su-netraṃ viśālam prasannānanaṃ nīlakanṭham dayālam mṛgādīśa-carmāmbaram muṇḍa-mālam priyaṃ śaṅkaram sarvanāthaṃ bhajāmi",
+"translation": "I worship the Lord with swaying earrings, broad eyes, serene face, blue throat, compassionate, wearing tiger skin and skull garland, beloved Śaṅkara, Lord of all.",
+"symbols": ["Blue Throat", "Tiger Skin", "Skull Garland", "Earrings"],
+"interpretation": {
+"foundational": "Śiva is compassionate and protector of devotees.",
+"advanced": "Represents mastery over death, poison, primal instincts, and ultimate ascetic power."
+}
+}
+],
+"metadata": {
+"themes": ["Devotion", "Transcendence", "Symbols", "Meditation", "Bhakti", "Shaiva Philosophy"],
+"symbolic_tags": ["Trishula", "Third Eye", "Ganga", "Moon", "Serpent", "Turīya", "Nirguna"],
+"usage": ["Meditation Guidance", "Symbolic Analysis", "Textual Reference", "AI Knowledge Base"]
+},
+"references": ["Śiva Purāṇa", "Rudrāṣṭakam commentaries", "Tulsīdās Ramcharitmanas", "Classical Iconography Sources"]
+}

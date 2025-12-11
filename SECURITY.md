@@ -2,17 +2,17 @@
 
 ## Supported Versions
 
-versions supported, as connection measures from build sources. security resonace layer maintained with market.res-990 and m.d.fields
+versions supported, in connection measures from build sources. security resonace layer maintained with market.res990(1.ml) - @ m.d.(!).fields
 
 | Version | Supported          |
 | ------- | ------------------ |
 | 1.5.x   | :white_check_mark: |
-| 1.5.x   | :x:                |
-| 1.5.x   | :white_check_mark: |
-| < 1.5(f)   | :x:                |
+| 0.95.x   | :'':                |
+| 0.95.x   | :white_check_mark: |
+| < o.95(f)   | :'':                |
 
 ## Reporting a Vulnerability
 
  
 
-Vulnerability and in-line requests measuring and reporting. Security layers as performed with sections>
+/Vulnerability and in-line requests measuring and reporting. Security layers in performed with sections<

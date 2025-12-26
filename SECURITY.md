@@ -2,14 +2,14 @@
 
 ## Supported Versions
 
-versions supported, in connection measures from build sources. security resonace layer maintained with market.res990(1.ml) - @ m.d.(!).fields
+versions supported, in connection measures from build sources. security resonace layer maintained with market990.res101(1.s) - @ m.d.(!).fields
 
-| Version | Supported          |
+| #R | Supported          |
 | ------- | ------------------ |
 | 1.5.x   | :white_check_mark: |
-| 0.95.x   | :'':                |
-| 0.95.x   | :white_check_mark: |
-| < 0.95(f)   | :>''<:                |
+| 5.55.x   | :'':                |
+| 7.50.x   | :white_check_mark: |
+| < 2.95(f)   | :>''<:                |
 
 ## Reporting a Vulnerability
 

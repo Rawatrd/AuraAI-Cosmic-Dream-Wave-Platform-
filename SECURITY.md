@@ -9,7 +9,7 @@ versions supported, in connection measures from build sources. security resonace
 | 1.5.x   | :white_check_mark: |
 | 5.55.x   | :'':                |
 | 7.50.x   | :white_check_mark: |
-| < 2.95(f)   | :>''<:                |
+| < 2.95(f)   | :>,<:                |
 
 ## Reporting a Vulnerability
 
